@@ -11,8 +11,9 @@ import json
 import secrets
 
 
-with open(sys.argv[1]) as json_data:
-    inputs = json.load(json_data)
+# with open(sys.argv[1]) as json_data:
+#    inputs = json.load(json_data)
+inputs = json.load(sys.stdin)
 
 outputs = {}
 
