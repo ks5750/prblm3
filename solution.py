@@ -11,8 +11,8 @@ import json
 import secrets
 
 
-# with open(sys.argv[1]) as json_data:
-#   inputs = json.load(json_data)
+#with open(sys.argv[1]) as json_data:
+#  inputs = json.load(json_data)
 inputs = json.load(sys.stdin)
 
 outputs = {}
@@ -54,6 +54,13 @@ for x in range(0, len(prblm3_ascii), 16):
     problem3=problem3+AES_encrypt_block(prblm1_key,prblm3_ascii[x:x+16]).hex()
 outputs["problem3"] = problem3
 
+# Problem 4
+prblm4_hex = inputs["problem4"]
+prblm4_ascii=bytes.fromhex(prblm4_hex)
+problem4=""
+for x in range(0, len(prblm4_ascii), 16):
+    problem4=problem4+AES_decrypt_block(prblm1_key,prblm4_ascii[x:x+16]).decode()
+outputs["problem4"] = problem4
 
 
 # Output
