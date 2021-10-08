@@ -42,6 +42,13 @@ def pad_(data,block_size):
     pad =(chr(pad_size) * pad_size).encode()
     return data+pad.hex()
 
+
+def unpad(plain_text):
+    last_character = plain_text[len(plain_text) - 1:]
+    bytes_to_remove = ord(last_character)
+    print("test",bytes_to_remove)
+    return plain_text[:-bytes_to_remove]
+
 # Problem 1
 input_asciistr = inputs["problem1"].encode()
 prblm1_key= ('A' * 16).encode()
@@ -79,6 +86,18 @@ for x in prblm5_hex:
     final_array5.append(padded_data)
 
 outputs["problem5"] = final_array5
+
+
+# Problem 6
+prblm6_hex = inputs["problem6"]
+final_array6 =[]
+for x in prblm6_hex:
+    unpadded_data=unpad(bytes.fromhex(x))
+    final_array6.append(unpadded_data.hex())
+
+outputs["problem6"] = final_array6
+
+
 
 # Output
 #
