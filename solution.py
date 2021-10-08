@@ -40,7 +40,6 @@ def pad_(data,block_size):
         pad_size=block_size
 
     pad =(chr(pad_size) * pad_size).encode()
-    print(pad)
     return data+pad.hex()
 
 # Problem 1
@@ -76,10 +75,7 @@ outputs["problem4"] = problem4
 prblm5_hex = inputs["problem5"]
 final_array5 =[]
 for x in prblm5_hex:
-    print(x,len(x))
-    print(bytes.fromhex(x),len(bytes.fromhex(x)))
     padded_data=pad_(x,16)
-    print(padded_data)
     final_array5.append(padded_data)
 
 outputs["problem5"] = final_array5
