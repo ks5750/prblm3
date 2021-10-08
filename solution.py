@@ -46,7 +46,6 @@ def pad_(data,block_size):
 def unpad(plain_text):
     last_character = plain_text[len(plain_text) - 1:]
     bytes_to_remove = ord(last_character)
-    print("test",bytes_to_remove)
     return plain_text[:-bytes_to_remove]
 
 # Problem 1
