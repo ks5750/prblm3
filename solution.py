@@ -11,8 +11,8 @@ import json
 import secrets
 
 
-#with open(sys.argv[1]) as json_data:
-#  inputs = json.load(json_data)
+# with open(sys.argv[1]) as json_data:
+#   inputs = json.load(json_data)
 inputs = json.load(sys.stdin)
 
 outputs = {}
@@ -32,6 +32,16 @@ def AES_decrypt_block(key, block):
     # If you'd like to understand these two lines, come back after Problem 4.
     cipher = Cipher(algorithms.AES(key), modes.ECB(), default_backend())
     return cipher.decryptor().update(block)
+
+def pad_(data,block_size):
+    pad_size=(block_size - len(bytes.fromhex(data))) % block_size
+
+    if pad_size == 0:
+        pad_size=block_size
+
+    pad =(chr(pad_size) * pad_size).encode()
+    print(pad)
+    return data+pad.hex()
 
 # Problem 1
 input_asciistr = inputs["problem1"].encode()
@@ -62,6 +72,17 @@ for x in range(0, len(prblm4_ascii), 16):
     problem4=problem4+AES_decrypt_block(prblm1_key,prblm4_ascii[x:x+16]).decode()
 outputs["problem4"] = problem4
 
+# Problem 5
+prblm5_hex = inputs["problem5"]
+final_array5 =[]
+for x in prblm5_hex:
+    print(x,len(x))
+    print(bytes.fromhex(x),len(bytes.fromhex(x)))
+    padded_data=pad_(x,16)
+    print(padded_data)
+    final_array5.append(padded_data)
+
+outputs["problem5"] = final_array5
 
 # Output
 #
