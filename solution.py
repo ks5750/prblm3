@@ -143,8 +143,8 @@ for x in range(0, len(plaintext_8), 16):
 
     temp_8=plaintext_8[x:x+16]
     counter+=1
-    print(byte_counter," ",counter)
-    print("prblm8_encrypt", " ", prblm8_encrypt)
+    # print(byte_counter," ",counter)
+    # print("prblm8_encrypt", " ", prblm8_encrypt)
     cipher8= cipher8+xor_bytes(temp_8,bytes.fromhex(prblm8_encrypt)).hex()
 outputs["problem8"] = cipher8
 
