@@ -42,7 +42,6 @@ def pad_(data,block_size):
     pad =(chr(pad_size) * pad_size).encode()
     return data+pad.hex()
 
-
 def unpad(plain_text):
     last_character = plain_text[len(plain_text) - 1:]
     bytes_to_remove = ord(last_character)
@@ -95,6 +94,28 @@ for x in prblm6_hex:
     final_array6.append(unpadded_data.hex())
 
 outputs["problem6"] = final_array6
+
+
+# Problem 7
+prblm7_hex = inputs["problem7"]
+lyric_sbytes=prblm7_hex["lyrics"].encode().hex()
+key=prblm7_hex["key"]
+
+problem7=""
+repeats =[]
+final_array7 =[]
+padded_data=bytes.fromhex(pad_(lyric_sbytes,16))
+for x in range(0, len(padded_data), 16):
+    encrypted_val7=AES_encrypt_block(bytes.fromhex(key),padded_data[x:x+16]).hex()
+    if encrypted_val7 in problem7:
+        repeats.append(encrypted_val7)
+
+    problem7=problem7+encrypted_val7
+
+outputs["problem7"] = {
+    "ciphertext": problem7,
+    "repeats" : repeats
+}
 
 
 
