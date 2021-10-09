@@ -46,6 +46,14 @@ def unpad(plain_text):
     bytes_to_remove = ord(last_character)
     return plain_text[:-bytes_to_remove]
 
+def xor_bytes(a, b):
+    # assert len(a) == len(b)
+    output = bytearray(len(a))
+    for i in range(len(a)):
+        output[i] = a[i] ^ b[i]
+    return output
+
+
 # Problem 1
 input_asciistr = inputs["problem1"].encode()
 prblm1_key= ('A' * 16).encode()
@@ -116,6 +124,23 @@ outputs["problem7"] = {
     "repeats" : repeats
 }
 
+# Problem 8
+prblm8 = inputs["problem8"]
+key8=prblm8["key"]
+nonce_8=prblm8["nonce"]
+plaintext_8=bytes.fromhex(prblm8["plaintext"].encode().hex())
+counter= 1
+byte_counter = counter.to_bytes(4, "big")
+nonce_ctr=bytes.fromhex(nonce_8+byte_counter.hex())
+problem8=""
+cipher8=""
+for x in range(0, len(nonce_ctr), 16):
+    prblm8_encrypt=problem8+AES_encrypt_block(bytes.fromhex(key8),nonce_ctr[x:x+16]).hex()
+
+for x in range(0, len(plaintext_8), 16):
+    temp_8=plaintext_8[x:x+16]
+    cipher8= cipher8+xor_bytes(temp_8,bytes.fromhex(prblm8_encrypt)).hex()
+outputs["problem8"] = cipher8
 
 
 # Output
