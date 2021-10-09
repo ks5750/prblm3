@@ -10,7 +10,7 @@ import sys
 import json
 import secrets
 
-
+#
 # with open(sys.argv[1]) as json_data:
 #   inputs = json.load(json_data)
 inputs = json.load(sys.stdin)
@@ -129,16 +129,22 @@ prblm8 = inputs["problem8"]
 key8=prblm8["key"]
 nonce_8=prblm8["nonce"]
 plaintext_8=bytes.fromhex(prblm8["plaintext"].encode().hex())
-counter= 0
-byte_counter = counter.to_bytes(4, "big")
-nonce_ctr=bytes.fromhex(nonce_8+byte_counter.hex())
 problem8=""
 cipher8=""
-for x in range(0, len(nonce_ctr), 16):
-    prblm8_encrypt=problem8+AES_encrypt_block(bytes.fromhex(key8),nonce_ctr[x:x+16]).hex()
+
+
+counter= 0
 
 for x in range(0, len(plaintext_8), 16):
+    byte_counter = counter.to_bytes(4, "big")
+    nonce_ctr = bytes.fromhex(nonce_8 + byte_counter.hex())
+    for y in range(0, len(nonce_ctr), 16):
+        prblm8_encrypt = problem8 + AES_encrypt_block(bytes.fromhex(key8), nonce_ctr[y:y + 16]).hex()
+
     temp_8=plaintext_8[x:x+16]
+    counter+=1
+    print(byte_counter," ",counter)
+    print("prblm8_encrypt", " ", prblm8_encrypt)
     cipher8= cipher8+xor_bytes(temp_8,bytes.fromhex(prblm8_encrypt)).hex()
 outputs["problem8"] = cipher8
 
