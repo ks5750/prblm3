@@ -14,7 +14,6 @@ import secrets
 # with open(sys.argv[1]) as json_data:
 #   inputs = json.load(json_data)
 inputs = json.load(sys.stdin)
-
 outputs = {}
 
 
@@ -91,7 +90,7 @@ prblm6_hex = inputs["problem6"]
 final_array6 =[]
 for x in prblm6_hex:
     unpadded_data=unpad(bytes.fromhex(x))
-    final_array6.append(unpadded_data.hex())
+    final_array6.append(unpadded_data.decode())
 
 outputs["problem6"] = final_array6
 
