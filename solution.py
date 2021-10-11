@@ -154,13 +154,13 @@ final_len=""
 prblm9_encrypt=""
 counter_9=0
 for x in range(0,3):
-    byte_counter = counter_9.to_bytes(4, "big")
-    nonce_ctr = bytes.fromhex(nonce_9.hex() + byte_counter.hex())
-    prblm9_encrypt = prblm9_encrypt + AES_encrypt_block(bytes.fromhex(prblm9_key), nonce_ctr).hex()
+    byte_counter = x.to_bytes(4, "big")
+    nonce_ctr9 = nonce_9 + byte_counter
+    prblm9_encrypt = prblm9_encrypt + AES_encrypt_block(bytes.fromhex(prblm9_key), nonce_ctr9).hex()
 
-    counter_9+=1
+
 for x in range(0,40,8):
-    numner=int.from_bytes(prblm9_encrypt[x:x+8].encode(), "little")
+    numner=int.from_bytes(bytes.fromhex(prblm9_encrypt)[x:x+8], "little")
     # print("little endian22 -",x,"-", numner)
     final_array9.append(numner)
 
