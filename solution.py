@@ -131,10 +131,7 @@ nonce_8=prblm8["nonce"]
 plaintext_8=bytes.fromhex(prblm8["plaintext"].encode().hex())
 problem8=""
 cipher8=""
-
-
 counter= 0
-
 for x in range(0, len(plaintext_8), 16):
     byte_counter = counter.to_bytes(4, "big")
     nonce_ctr = bytes.fromhex(nonce_8 + byte_counter.hex())
@@ -143,11 +140,55 @@ for x in range(0, len(plaintext_8), 16):
 
     temp_8=plaintext_8[x:x+16]
     counter+=1
-    # print(byte_counter," ",counter)
-    # print("prblm8_encrypt", " ", prblm8_encrypt)
     cipher8= cipher8+xor_bytes(temp_8,bytes.fromhex(prblm8_encrypt)).hex()
 outputs["problem8"] = cipher8
 
+
+# Problem 9
+prblm9_key = inputs["problem9"]
+nonce_9=(b"\x00" * 12)
+
+final_array9 =[]
+cnt=0
+final_len=""
+prblm9_encrypt=""
+for x in range(0,3):
+    byte_counter = counter.to_bytes(4, "big")
+    nonce_ctr = bytes.fromhex(nonce_9.hex() + byte_counter.hex())
+    prblm9_encrypt = prblm9_encrypt + AES_encrypt_block(bytes.fromhex(prblm9_key), nonce_ctr).hex()
+
+    counter+=1
+for x in range(0,40,8):
+    numner=int.from_bytes(prblm9_encrypt[x:x+8].encode(), "little")
+    # print("little endian22 -",x,"-", numner)
+    final_array9.append(numner)
+
+outputs["problem9"] = final_array9
+
+
+#
+# while (cnt<41):
+#     random_aes =AES_encrypt_block(bytes.fromhex(prblm9_key),nonce_9).hex()
+#     nonce_9=bytes.fromhex(random_aes)
+#     final_len=final_len+random_aes
+#     cnt=len(final_len)
+#     print("cnt -",cnt,"-", cnt)
+#
+# print("final_len -",final_len)
+# for x in range(0,40,16):
+#     numner=int.from_bytes(final_len[x:x+5].encode(), "little")
+#     print(numner.__sizeof__())
+#     print("little endian22 -",x,"-", int.from_bytes(final_len[x:x+5].encode(), "little"))
+
+
+# for i in range(5):
+#     random_aes =AES_encrypt_block(bytes.fromhex(prblm9_key),nonce_8).hex()
+#     nonce_8=bytes.fromhex(random_aes)
+#     final_array9.append(random_aes)
+#     print("random_aes -",i,"-", random_aes)
+#     print("random_aes -",i,"-", len(bytes.fromhex(random_aes)))
+#
+#     print("little endian -",i,"-", int.from_bytes(random_aes.encode(), "little"))
 
 # Output
 #
