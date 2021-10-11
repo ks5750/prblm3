@@ -10,7 +10,7 @@ import sys
 import json
 import secrets
 
-#
+
 # with open(sys.argv[1]) as json_data:
 #   inputs = json.load(json_data)
 inputs = json.load(sys.stdin)
@@ -152,12 +152,13 @@ final_array9 =[]
 cnt=0
 final_len=""
 prblm9_encrypt=""
+counter_9=0
 for x in range(0,3):
-    byte_counter = counter.to_bytes(4, "big")
+    byte_counter = counter_9.to_bytes(4, "big")
     nonce_ctr = bytes.fromhex(nonce_9.hex() + byte_counter.hex())
     prblm9_encrypt = prblm9_encrypt + AES_encrypt_block(bytes.fromhex(prblm9_key), nonce_ctr).hex()
 
-    counter+=1
+    counter_9+=1
 for x in range(0,40,8):
     numner=int.from_bytes(prblm9_encrypt[x:x+8].encode(), "little")
     # print("little endian22 -",x,"-", numner)
